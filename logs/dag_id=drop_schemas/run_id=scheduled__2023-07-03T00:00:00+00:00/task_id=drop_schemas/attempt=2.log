@@ -1,0 +1,272 @@
+[2023-07-05T06:24:19.174+0000] {taskinstance.py:1087} INFO - Dependencies all met for <TaskInstance: drop_schemas.drop_schemas scheduled__2023-07-03T00:00:00+00:00 [queued]>
+[2023-07-05T06:24:19.210+0000] {taskinstance.py:1087} INFO - Dependencies all met for <TaskInstance: drop_schemas.drop_schemas scheduled__2023-07-03T00:00:00+00:00 [queued]>
+[2023-07-05T06:24:19.212+0000] {taskinstance.py:1283} INFO - 
+--------------------------------------------------------------------------------
+[2023-07-05T06:24:19.215+0000] {taskinstance.py:1284} INFO - Starting attempt 2 of 2
+[2023-07-05T06:24:19.219+0000] {taskinstance.py:1285} INFO - 
+--------------------------------------------------------------------------------
+[2023-07-05T06:24:19.276+0000] {taskinstance.py:1304} INFO - Executing <Task(SnowflakeOperator): drop_schemas> on 2023-07-03 00:00:00+00:00
+[2023-07-05T06:24:19.293+0000] {standard_task_runner.py:55} INFO - Started process 2142 to run task
+[2023-07-05T06:24:19.312+0000] {standard_task_runner.py:82} INFO - Running: ['***', 'tasks', 'run', 'drop_schemas', 'drop_schemas', 'scheduled__2023-07-03T00:00:00+00:00', '--job-id', '16', '--raw', '--subdir', 'DAGS_FOLDER/task.py', '--cfg-path', '/tmp/tmpilxa_vny']
+[2023-07-05T06:24:19.319+0000] {standard_task_runner.py:83} INFO - Job 16: Subtask drop_schemas
+[2023-07-05T06:24:19.590+0000] {task_command.py:389} INFO - Running <TaskInstance: drop_schemas.drop_schemas scheduled__2023-07-03T00:00:00+00:00 [running]> on host 8e67264b832d
+[2023-07-05T06:24:19.868+0000] {taskinstance.py:1513} INFO - Exporting the following env vars:
+AIRFLOW_CTX_DAG_OWNER=***
+AIRFLOW_CTX_DAG_ID=drop_schemas
+AIRFLOW_CTX_TASK_ID=drop_schemas
+AIRFLOW_CTX_EXECUTION_DATE=2023-07-03T00:00:00+00:00
+AIRFLOW_CTX_TRY_NUMBER=2
+AIRFLOW_CTX_DAG_RUN_ID=scheduled__2023-07-03T00:00:00+00:00
+[2023-07-05T06:24:19.870+0000] {sql.py:253} INFO - Executing: 
+SELECT 'DROP SCHEMA IF EXISTS "' || schema_name || '";' AS drop_statement
+FROM information_schema.schemata
+WHERE schema_name NOT IN (
+    SELECT DISTINCT TABLE_SCHEMA 
+    FROM information_schema.tables
+    WHERE LAST_QUERY_ID IS NOT NULL
+      AND LAST_QUERY_END_TIME >= CURRENT_TIMESTAMP() - INTERVAL '30 DAY'
+)
+[2023-07-05T06:24:19.920+0000] {base.py:73} INFO - Using connection ID 'snowflake_connection' for task execution.
+[2023-07-05T06:24:25.870+0000] {logging_mixin.py:137} WARNING - /home/***/.local/lib/python3.7/site-packages/snowflake/connector/options.py:109 UserWarning: You have an incompatible version of 'pyarrow' installed (9.0.0), please install a version that adheres to: 'pyarrow<10.1.0,>=10.0.1; extra == "pandas"'
+[2023-07-05T06:24:26.134+0000] {base.py:73} INFO - Using connection ID 'snowflake_connection' for task execution.
+[2023-07-05T06:24:26.140+0000] {connection.py:300} INFO - Snowflake Connector for Python Version: 3.0.4, Python Version: 3.7.15, Platform: Linux-5.15.49-linuxkit-x86_64-with-debian-11.5
+[2023-07-05T06:24:26.148+0000] {connection.py:1013} INFO - This connection is in OCSP Fail Open Mode. TLS Certificates would be checked for validity and revocation status. Any other Certificate Revocation related exceptions or OCSP Responder failures would be disregarded in favor of connectivity.
+[2023-07-05T06:24:26.152+0000] {connection.py:1030} INFO - Setting use_openssl_only mode to False
+[2023-07-05T06:25:26.213+0000] {connectionpool.py:813} WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ConnectTimeoutError(<snowflake.connector.vendored.urllib3.connection.HTTPSConnection object at 0x7f0c8b51a390>, 'Connection to https timed out. (connect timeout=60)')': //ko93018.ap-south-1.aws.snowflakecomputing.com.snowflakecomputing.com:443/session/v1/login-request?request_id=bf901dc6-33cf-439f-9754-eeb7d2efcb3a&databaseName=&schemaName=SNOWFLAKE_SAMPLE_DATA&warehouse=&roleName=
+[2023-07-05T06:27:27.369+0000] {connectionpool.py:813} WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ConnectTimeoutError(<snowflake.connector.vendored.urllib3.connection.HTTPSConnection object at 0x7f0c8ab92d50>, 'Connection to https timed out. (connect timeout=60)')': //ko93018.ap-south-1.aws.snowflakecomputing.com.snowflakecomputing.com:443/session/v1/login-request?request_id=da6b9237-8680-4ed9-b6bb-59ebf226ff72&databaseName=&schemaName=SNOWFLAKE_SAMPLE_DATA&warehouse=&roleName=
+[2023-07-05T06:28:27.440+0000] {taskinstance.py:1772} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/vendored/urllib3/connection.py", line 175, in _new_conn
+    (self._dns_host, self.port), self.timeout, **extra_kw
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/vendored/urllib3/util/connection.py", line 95, in create_connection
+    raise err
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/vendored/urllib3/util/connection.py", line 85, in create_connection
+    sock.connect(sa)
+socket.timeout: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/vendored/urllib3/connectionpool.py", line 710, in urlopen
+    chunked=chunked,
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/vendored/urllib3/connectionpool.py", line 386, in _make_request
+    self._validate_conn(conn)
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/vendored/urllib3/connectionpool.py", line 1042, in _validate_conn
+    conn.connect()
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/vendored/urllib3/connection.py", line 363, in connect
+    self.sock = conn = self._new_conn()
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/vendored/urllib3/connection.py", line 182, in _new_conn
+    % (self.host, self.timeout),
+snowflake.connector.vendored.urllib3.exceptions.ConnectTimeoutError: (<snowflake.connector.vendored.urllib3.connection.HTTPSConnection object at 0x7f0c8b51a7d0>, 'Connection to https timed out. (connect timeout=60)')
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/vendored/requests/adapters.py", line 498, in send
+    chunked=chunked,
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/vendored/urllib3/connectionpool.py", line 828, in urlopen
+    **response_kw
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/vendored/urllib3/connectionpool.py", line 788, in urlopen
+    method, url, error=e, _pool=self, _stacktrace=sys.exc_info()[2]
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/vendored/urllib3/util/retry.py", line 592, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+snowflake.connector.vendored.urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='https', port=443): Max retries exceeded with url: //ko93018.ap-south-1.aws.snowflakecomputing.com.snowflakecomputing.com:443/session/v1/login-request?request_id=bf901dc6-33cf-439f-9754-eeb7d2efcb3a&databaseName=&schemaName=SNOWFLAKE_SAMPLE_DATA&warehouse=&roleName= (Caused by ConnectTimeoutError(<snowflake.connector.vendored.urllib3.connection.HTTPSConnection object at 0x7f0c8b51a7d0>, 'Connection to https timed out. (connect timeout=60)'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/network.py", line 1045, in _request_exec
+    auth=SnowflakeAuth(token),
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/vendored/requests/sessions.py", line 587, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/vendored/requests/sessions.py", line 701, in send
+    r = adapter.send(request, **kwargs)
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/vendored/requests/adapters.py", line 508, in send
+    raise ConnectTimeout(e, request=request)
+snowflake.connector.vendored.requests.exceptions.ConnectTimeout: HTTPSConnectionPool(host='https', port=443): Max retries exceeded with url: //ko93018.ap-south-1.aws.snowflakecomputing.com.snowflakecomputing.com:443/session/v1/login-request?request_id=bf901dc6-33cf-439f-9754-eeb7d2efcb3a&databaseName=&schemaName=SNOWFLAKE_SAMPLE_DATA&warehouse=&roleName= (Caused by ConnectTimeoutError(<snowflake.connector.vendored.urllib3.connection.HTTPSConnection object at 0x7f0c8b51a7d0>, 'Connection to https timed out. (connect timeout=60)'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/connection.py", line 1165, in _authenticate
+    session_parameters=self._session_parameters,
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/auth/_auth.py", line 255, in authenticate
+    socket_timeout=auth_timeout,
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/network.py", line 729, in _post_request
+    _include_retry_params=_include_retry_params,
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/network.py", line 819, in fetch
+    session, method, full_url, headers, data, retry_ctx, **kwargs
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/network.py", line 941, in _request_exec_wrapper
+    raise e
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/network.py", line 868, in _request_exec_wrapper
+    **kwargs,
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/network.py", line 1119, in _request_exec
+    errno=ER_CONNECTION_TIMEOUT,
+snowflake.connector.errors.OperationalError: 251011: 251011: ConnectionTimeout occurred. Will be handled by authenticator
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.7/site-packages/airflow/providers/common/sql/operators/sql.py", line 261, in execute
+    return_last=self.return_last,
+  File "/home/airflow/.local/lib/python3.7/site-packages/airflow/providers/snowflake/hooks/snowflake.py", line 373, in run
+    with closing(self.get_conn()) as conn:
+  File "/home/airflow/.local/lib/python3.7/site-packages/airflow/providers/snowflake/hooks/snowflake.py", line 296, in get_conn
+    conn = connector.connect(**conn_config)
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/__init__.py", line 51, in Connect
+    return SnowflakeConnection(**kwargs)
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/connection.py", line 319, in __init__
+    self.connect(**kwargs)
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/connection.py", line 590, in connect
+    self.__open_connection()
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/connection.py", line 860, in __open_connection
+    self.authenticate_with_retry(self.auth_class)
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/connection.py", line 1127, in authenticate_with_retry
+    self._authenticate(auth_instance)
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/connection.py", line 1198, in _authenticate
+    raise auth_op from e
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/connection.py", line 1180, in _authenticate
+    password=self._password,
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/auth/by_plugin.py", line 219, in handle_timeout
+    raise error
+snowflake.connector.errors.OperationalError: 250001: 250001: Could not connect to Snowflake backend after 1 attempt(s).Aborting
+[2023-07-05T06:28:27.463+0000] {taskinstance.py:1327} INFO - Marking task as FAILED. dag_id=drop_schemas, task_id=drop_schemas, execution_date=20230703T000000, start_date=20230705T062419, end_date=20230705T062827
+[2023-07-05T06:28:27.523+0000] {standard_task_runner.py:105} ERROR - Failed to execute job 16 for task drop_schemas (250001: 250001: Could not connect to Snowflake backend after 1 attempt(s).Aborting; 2142)
+[2023-07-05T06:28:27.600+0000] {local_task_job.py:159} INFO - Task exited with return code 1
+[2023-07-05T06:28:27.688+0000] {taskinstance.py:2582} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2023-07-05T07:18:26.107+0000] {taskinstance.py:1087} INFO - Dependencies all met for <TaskInstance: drop_schemas.drop_schemas scheduled__2023-07-03T00:00:00+00:00 [queued]>
+[2023-07-05T07:18:26.155+0000] {taskinstance.py:1087} INFO - Dependencies all met for <TaskInstance: drop_schemas.drop_schemas scheduled__2023-07-03T00:00:00+00:00 [queued]>
+[2023-07-05T07:18:26.166+0000] {taskinstance.py:1283} INFO - 
+--------------------------------------------------------------------------------
+[2023-07-05T07:18:26.168+0000] {taskinstance.py:1284} INFO - Starting attempt 2 of 2
+[2023-07-05T07:18:26.169+0000] {taskinstance.py:1285} INFO - 
+--------------------------------------------------------------------------------
+[2023-07-05T07:18:26.217+0000] {taskinstance.py:1304} INFO - Executing <Task(SnowflakeOperator): drop_schemas> on 2023-07-03 00:00:00+00:00
+[2023-07-05T07:18:26.227+0000] {standard_task_runner.py:55} INFO - Started process 1291 to run task
+[2023-07-05T07:18:26.244+0000] {standard_task_runner.py:82} INFO - Running: ['***', 'tasks', 'run', 'drop_schemas', 'drop_schemas', 'scheduled__2023-07-03T00:00:00+00:00', '--job-id', '14', '--raw', '--subdir', 'DAGS_FOLDER/task.py', '--cfg-path', '/tmp/tmp4ovdykhw']
+[2023-07-05T07:18:26.250+0000] {standard_task_runner.py:83} INFO - Job 14: Subtask drop_schemas
+[2023-07-05T07:18:26.461+0000] {task_command.py:389} INFO - Running <TaskInstance: drop_schemas.drop_schemas scheduled__2023-07-03T00:00:00+00:00 [running]> on host 4d829e7f4f94
+[2023-07-05T07:18:26.758+0000] {taskinstance.py:1513} INFO - Exporting the following env vars:
+AIRFLOW_CTX_DAG_OWNER=***
+AIRFLOW_CTX_DAG_ID=drop_schemas
+AIRFLOW_CTX_TASK_ID=drop_schemas
+AIRFLOW_CTX_EXECUTION_DATE=2023-07-03T00:00:00+00:00
+AIRFLOW_CTX_TRY_NUMBER=2
+AIRFLOW_CTX_DAG_RUN_ID=scheduled__2023-07-03T00:00:00+00:00
+[2023-07-05T07:18:26.761+0000] {sql.py:253} INFO - Executing: 
+SELECT 'DROP SCHEMA IF EXISTS "' || schema_name || '";' AS drop_statement
+FROM information_schema.schemata
+WHERE schema_name NOT IN (
+    SELECT DISTINCT TABLE_SCHEMA 
+    FROM information_schema.tables
+    WHERE LAST_QUERY_ID IS NOT NULL
+      AND LAST_QUERY_END_TIME >= CURRENT_TIMESTAMP() - INTERVAL '30 DAY'
+)
+[2023-07-05T07:18:26.802+0000] {base.py:73} INFO - Using connection ID 'snowflake_connection' for task execution.
+[2023-07-05T07:18:29.964+0000] {logging_mixin.py:137} WARNING - /home/***/.local/lib/python3.7/site-packages/snowflake/connector/options.py:109 UserWarning: You have an incompatible version of 'pyarrow' installed (9.0.0), please install a version that adheres to: 'pyarrow<10.1.0,>=10.0.1; extra == "pandas"'
+[2023-07-05T07:18:30.392+0000] {base.py:73} INFO - Using connection ID 'snowflake_connection' for task execution.
+[2023-07-05T07:18:30.407+0000] {connection.py:300} INFO - Snowflake Connector for Python Version: 3.0.4, Python Version: 3.7.15, Platform: Linux-5.15.49-linuxkit-x86_64-with-debian-11.5
+[2023-07-05T07:18:30.414+0000] {connection.py:1013} INFO - This connection is in OCSP Fail Open Mode. TLS Certificates would be checked for validity and revocation status. Any other Certificate Revocation related exceptions or OCSP Responder failures would be disregarded in favor of connectivity.
+[2023-07-05T07:18:30.415+0000] {connection.py:1030} INFO - Setting use_openssl_only mode to False
+[2023-07-05T07:19:30.545+0000] {connectionpool.py:813} WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ConnectTimeoutError(<snowflake.connector.vendored.urllib3.connection.HTTPSConnection object at 0x7f6013e61c50>, 'Connection to https timed out. (connect timeout=60)')': //ko93018.Asia%20Pacific%20(Mumbai).snowflakecomputing.com:443/session/v1/login-request?request_id=59fca9b3-52ff-4c40-a556-315917ddfa1b&databaseName=SNOWFLAKE_SAMPE_DATA&schemaName=&warehouse=&roleName=
+[2023-07-05T07:21:33.663+0000] {connectionpool.py:813} WARNING - Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'ConnectTimeoutError(<snowflake.connector.vendored.urllib3.connection.HTTPSConnection object at 0x7f601354e050>, 'Connection to https timed out. (connect timeout=60)')': //ko93018.Asia%20Pacific%20(Mumbai).snowflakecomputing.com:443/session/v1/login-request?request_id=57ddcddd-ebc8-47de-96e7-eeff47bfe782&databaseName=SNOWFLAKE_SAMPE_DATA&schemaName=&warehouse=&roleName=
+[2023-07-05T07:22:33.732+0000] {taskinstance.py:1772} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/vendored/urllib3/connection.py", line 175, in _new_conn
+    (self._dns_host, self.port), self.timeout, **extra_kw
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/vendored/urllib3/util/connection.py", line 95, in create_connection
+    raise err
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/vendored/urllib3/util/connection.py", line 85, in create_connection
+    sock.connect(sa)
+socket.timeout: timed out
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/vendored/urllib3/connectionpool.py", line 710, in urlopen
+    chunked=chunked,
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/vendored/urllib3/connectionpool.py", line 386, in _make_request
+    self._validate_conn(conn)
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/vendored/urllib3/connectionpool.py", line 1042, in _validate_conn
+    conn.connect()
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/vendored/urllib3/connection.py", line 363, in connect
+    self.sock = conn = self._new_conn()
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/vendored/urllib3/connection.py", line 182, in _new_conn
+    % (self.host, self.timeout),
+snowflake.connector.vendored.urllib3.exceptions.ConnectTimeoutError: (<snowflake.connector.vendored.urllib3.connection.HTTPSConnection object at 0x7f6033fda290>, 'Connection to https timed out. (connect timeout=60)')
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/vendored/requests/adapters.py", line 498, in send
+    chunked=chunked,
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/vendored/urllib3/connectionpool.py", line 828, in urlopen
+    **response_kw
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/vendored/urllib3/connectionpool.py", line 788, in urlopen
+    method, url, error=e, _pool=self, _stacktrace=sys.exc_info()[2]
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/vendored/urllib3/util/retry.py", line 592, in increment
+    raise MaxRetryError(_pool, url, error or ResponseError(cause))
+snowflake.connector.vendored.urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='https', port=443): Max retries exceeded with url: //ko93018.Asia%20Pacific%20(Mumbai).snowflakecomputing.com:443/session/v1/login-request?request_id=59fca9b3-52ff-4c40-a556-315917ddfa1b&databaseName=SNOWFLAKE_SAMPE_DATA&schemaName=&warehouse=&roleName= (Caused by ConnectTimeoutError(<snowflake.connector.vendored.urllib3.connection.HTTPSConnection object at 0x7f6033fda290>, 'Connection to https timed out. (connect timeout=60)'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/network.py", line 1045, in _request_exec
+    auth=SnowflakeAuth(token),
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/vendored/requests/sessions.py", line 587, in request
+    resp = self.send(prep, **send_kwargs)
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/vendored/requests/sessions.py", line 701, in send
+    r = adapter.send(request, **kwargs)
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/vendored/requests/adapters.py", line 508, in send
+    raise ConnectTimeout(e, request=request)
+snowflake.connector.vendored.requests.exceptions.ConnectTimeout: HTTPSConnectionPool(host='https', port=443): Max retries exceeded with url: //ko93018.Asia%20Pacific%20(Mumbai).snowflakecomputing.com:443/session/v1/login-request?request_id=59fca9b3-52ff-4c40-a556-315917ddfa1b&databaseName=SNOWFLAKE_SAMPE_DATA&schemaName=&warehouse=&roleName= (Caused by ConnectTimeoutError(<snowflake.connector.vendored.urllib3.connection.HTTPSConnection object at 0x7f6033fda290>, 'Connection to https timed out. (connect timeout=60)'))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/connection.py", line 1165, in _authenticate
+    session_parameters=self._session_parameters,
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/auth/_auth.py", line 255, in authenticate
+    socket_timeout=auth_timeout,
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/network.py", line 729, in _post_request
+    _include_retry_params=_include_retry_params,
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/network.py", line 819, in fetch
+    session, method, full_url, headers, data, retry_ctx, **kwargs
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/network.py", line 941, in _request_exec_wrapper
+    raise e
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/network.py", line 868, in _request_exec_wrapper
+    **kwargs,
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/network.py", line 1119, in _request_exec
+    errno=ER_CONNECTION_TIMEOUT,
+snowflake.connector.errors.OperationalError: 251011: 251011: ConnectionTimeout occurred. Will be handled by authenticator
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.7/site-packages/airflow/providers/common/sql/operators/sql.py", line 261, in execute
+    return_last=self.return_last,
+  File "/home/airflow/.local/lib/python3.7/site-packages/airflow/providers/snowflake/hooks/snowflake.py", line 373, in run
+    with closing(self.get_conn()) as conn:
+  File "/home/airflow/.local/lib/python3.7/site-packages/airflow/providers/snowflake/hooks/snowflake.py", line 296, in get_conn
+    conn = connector.connect(**conn_config)
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/__init__.py", line 51, in Connect
+    return SnowflakeConnection(**kwargs)
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/connection.py", line 319, in __init__
+    self.connect(**kwargs)
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/connection.py", line 590, in connect
+    self.__open_connection()
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/connection.py", line 860, in __open_connection
+    self.authenticate_with_retry(self.auth_class)
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/connection.py", line 1127, in authenticate_with_retry
+    self._authenticate(auth_instance)
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/connection.py", line 1198, in _authenticate
+    raise auth_op from e
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/connection.py", line 1180, in _authenticate
+    password=self._password,
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/auth/by_plugin.py", line 219, in handle_timeout
+    raise error
+snowflake.connector.errors.OperationalError: 250001: 250001: Could not connect to Snowflake backend after 1 attempt(s).Aborting
+[2023-07-05T07:22:33.952+0000] {taskinstance.py:1327} INFO - Marking task as FAILED. dag_id=drop_schemas, task_id=drop_schemas, execution_date=20230703T000000, start_date=20230705T071826, end_date=20230705T072233
+[2023-07-05T07:22:33.974+0000] {standard_task_runner.py:105} ERROR - Failed to execute job 14 for task drop_schemas (250001: 250001: Could not connect to Snowflake backend after 1 attempt(s).Aborting; 1291)
+[2023-07-05T07:22:34.046+0000] {local_task_job.py:159} INFO - Task exited with return code 1
+[2023-07-05T07:22:34.073+0000] {taskinstance.py:2582} INFO - 0 downstream tasks scheduled from follow-on schedule check

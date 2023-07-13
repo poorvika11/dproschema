@@ -1,0 +1,59 @@
+[2023-07-05T06:04:23.888+0000] {taskinstance.py:1087} INFO - Dependencies all met for <TaskInstance: drop_schemas.drop_schemas manual__2023-07-05T06:04:22.308731+00:00 [queued]>
+[2023-07-05T06:04:23.905+0000] {taskinstance.py:1087} INFO - Dependencies all met for <TaskInstance: drop_schemas.drop_schemas manual__2023-07-05T06:04:22.308731+00:00 [queued]>
+[2023-07-05T06:04:23.906+0000] {taskinstance.py:1283} INFO - 
+--------------------------------------------------------------------------------
+[2023-07-05T06:04:23.908+0000] {taskinstance.py:1284} INFO - Starting attempt 1 of 2
+[2023-07-05T06:04:23.909+0000] {taskinstance.py:1285} INFO - 
+--------------------------------------------------------------------------------
+[2023-07-05T06:04:23.932+0000] {taskinstance.py:1304} INFO - Executing <Task(SnowflakeOperator): drop_schemas> on 2023-07-05 06:04:22.308731+00:00
+[2023-07-05T06:04:23.939+0000] {standard_task_runner.py:55} INFO - Started process 615 to run task
+[2023-07-05T06:04:23.947+0000] {standard_task_runner.py:82} INFO - Running: ['***', 'tasks', 'run', 'drop_schemas', 'drop_schemas', 'manual__2023-07-05T06:04:22.308731+00:00', '--job-id', '14', '--raw', '--subdir', 'DAGS_FOLDER/task.py', '--cfg-path', '/tmp/tmp7ab4e5vs']
+[2023-07-05T06:04:23.951+0000] {standard_task_runner.py:83} INFO - Job 14: Subtask drop_schemas
+[2023-07-05T06:04:24.156+0000] {task_command.py:389} INFO - Running <TaskInstance: drop_schemas.drop_schemas manual__2023-07-05T06:04:22.308731+00:00 [running]> on host 8e67264b832d
+[2023-07-05T06:04:24.309+0000] {taskinstance.py:1513} INFO - Exporting the following env vars:
+AIRFLOW_CTX_DAG_OWNER=***
+AIRFLOW_CTX_DAG_ID=drop_schemas
+AIRFLOW_CTX_TASK_ID=drop_schemas
+AIRFLOW_CTX_EXECUTION_DATE=2023-07-05T06:04:22.308731+00:00
+AIRFLOW_CTX_TRY_NUMBER=1
+AIRFLOW_CTX_DAG_RUN_ID=manual__2023-07-05T06:04:22.308731+00:00
+[2023-07-05T06:04:24.313+0000] {sql.py:253} INFO - Executing: 
+SELECT 'DROP SCHEMA IF EXISTS "' || schema_name || '";' AS drop_statement
+FROM information_schema.schemata
+WHERE schema_name NOT IN (
+    SELECT DISTINCT TABLE_SCHEMA 
+    FROM information_schema.tables
+    WHERE LAST_QUERY_ID IS NOT NULL
+      AND LAST_QUERY_END_TIME >= CURRENT_TIMESTAMP() - INTERVAL '30 DAY'
+)
+[2023-07-05T06:04:24.327+0000] {base.py:73} INFO - Using connection ID 'snowflake_connection' for task execution.
+[2023-07-05T06:04:25.204+0000] {logging_mixin.py:137} WARNING - /home/***/.local/lib/python3.7/site-packages/snowflake/connector/options.py:109 UserWarning: You have an incompatible version of 'pyarrow' installed (9.0.0), please install a version that adheres to: 'pyarrow<10.1.0,>=10.0.1; extra == "pandas"'
+[2023-07-05T06:04:25.299+0000] {base.py:73} INFO - Using connection ID 'snowflake_connection' for task execution.
+[2023-07-05T06:04:25.302+0000] {connection.py:300} INFO - Snowflake Connector for Python Version: 3.0.4, Python Version: 3.7.15, Platform: Linux-5.15.49-linuxkit-x86_64-with-debian-11.5
+[2023-07-05T06:04:25.308+0000] {taskinstance.py:1772} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.7/site-packages/airflow/providers/common/sql/operators/sql.py", line 261, in execute
+    return_last=self.return_last,
+  File "/home/airflow/.local/lib/python3.7/site-packages/airflow/providers/snowflake/hooks/snowflake.py", line 373, in run
+    with closing(self.get_conn()) as conn:
+  File "/home/airflow/.local/lib/python3.7/site-packages/airflow/providers/snowflake/hooks/snowflake.py", line 296, in get_conn
+    conn = connector.connect(**conn_config)
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/__init__.py", line 51, in Connect
+    return SnowflakeConnection(**kwargs)
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/connection.py", line 319, in __init__
+    self.connect(**kwargs)
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/connection.py", line 562, in connect
+    self.__config(**kwargs)
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/connection.py", line 1006, in __config
+    {"msg": "Account must be specified", "errno": ER_NO_ACCOUNT_NAME},
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/errors.py", line 294, in errorhandler_wrapper
+    error_value,
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/errors.py", line 348, in hand_to_other_handler
+    connection.errorhandler(connection, cursor, error_class, error_value)
+  File "/home/airflow/.local/lib/python3.7/site-packages/snowflake/connector/errors.py", line 231, in default_errorhandler
+    cursor=cursor,
+snowflake.connector.errors.ProgrammingError: 251001: 251001: Account must be specified
+[2023-07-05T06:04:25.323+0000] {taskinstance.py:1327} INFO - Marking task as UP_FOR_RETRY. dag_id=drop_schemas, task_id=drop_schemas, execution_date=20230705T060422, start_date=20230705T060423, end_date=20230705T060425
+[2023-07-05T06:04:25.337+0000] {standard_task_runner.py:105} ERROR - Failed to execute job 14 for task drop_schemas (251001: 251001: Account must be specified; 615)
+[2023-07-05T06:04:25.370+0000] {local_task_job.py:159} INFO - Task exited with return code 1
+[2023-07-05T06:04:25.392+0000] {taskinstance.py:2582} INFO - 0 downstream tasks scheduled from follow-on schedule check
